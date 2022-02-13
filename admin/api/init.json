@@ -1,0 +1,156 @@
+{
+  "clearInfo": {
+    "clearUrl": "api/clear.json"
+  },
+  "homeInfo": {
+    "title": "首页",
+    "icon": "fa fa-home",
+    "href": "page/welcome-1.html?mpi=m-p-i-0"
+  },
+  "logoInfo": {
+    "title": "Hoothin酒店集团",
+    "image": "images/logo.png",
+    "href": ""
+  },
+  "menuInfo": {
+    "currency": {
+      "title": "常规管理",
+      "icon": "fa fa-address-book",
+      "child": [
+
+       {
+          "title": "系统主页",
+          "href": "page/welcome-1.html",
+          "icon": "fa fa-desktop",
+          "target": "_self"
+        },
+        {
+          "title": "渠道管理",
+          "href": "",
+          "icon": "fa fa-globe",
+          "target": "_self",
+          "child": [
+            {
+              "title": "卡片代理商",
+              "href": "page/dl-table.html?mpi=m-p-i-2",
+              "icon": "fa fa-trophy",
+              "target": "_self"
+            },
+              {
+              "title": "发卡登记",
+              "href": "page/dl-card.html",
+              "icon": "fa fa-pencil-square-o",
+              "target": "_self"
+            },
+            {
+              "title": "酒店渠道商",
+              "href": "page/qd-table.html",
+              "icon": "fa fa-sitemap",
+              "target": "_self"
+            },
+             {
+              "title": "酒店管理",
+              "href": "page/jd-table.html",
+              "icon": "fa fa-institution",
+              "target": "_self"
+            }
+          ]
+        },
+        {
+          "title": "客房管理",
+          "href": "",
+          "icon": "fa fa-bed",
+          "target": "_self",
+          "child": [
+            {
+              "title": "日历房态",
+              "href": "page/ft-table.html",
+              "icon": "fa fa-calendar",
+              "target": "_self"
+            },
+            {
+              "title": "客房列表",
+              "href": "page/kf-table.html",
+              "icon": "fa fa-server",
+              "target": "_self"
+            }
+          ]
+        }, 
+      
+        {
+          "title": "会员管理",
+          "href": "",
+          "icon": "fa fa-user",
+          "target": "_self",
+          "child": [
+            {
+              "title": "会员中心",
+              "href": "page/hy-table.html",
+              "icon": "fa fa-group",
+              "target": "_self"
+            },
+            {
+              "title": "回访中心",
+              "href": "page/hf-table.html",
+              "icon": "fa fa-phone-square",
+              "target": "_self"
+            }
+          ]
+        },
+        {
+          "title": "财务统计",
+          "href": "",
+          "icon": "fa fa-calculator",
+          "target": "_self",
+          "child": [
+            {
+              "title": "账单管理",
+              "href": "page/zd-table.html",
+              "icon": "fa fa-file-text-o",
+              "target": "_self"
+            },
+            {
+              "title": "结算管理",
+              "href": "page/js-table.html",
+              "icon": "fa fa-jpy",
+              "target": "_self"
+            },
+            {
+              "title": "报表中心",
+              "href": "page/bb-table.html",
+              "icon": "fa fa-bar-chart",
+              "target": "_self"
+            }
+          ]
+        },
+        {
+          "title": "系统设置",
+          "href": "",
+          "icon": "fa fa-gears",
+          "target": "",
+          "child": [
+            {
+              "title": "权限管理",
+              "href": "page/qx-table.html",
+              "icon": "fa fa-coffee",
+              "target": "_self"
+            },
+            {
+              "title": "会员卡管理",
+              "href": "page/card.html",
+              "icon": "fa fa-credit-card",
+              "target": "_blank"
+            },
+            {
+              "title": "广告管理",
+              "href": "page/gg-table.html",
+              "icon": "fa fa-bookmark",
+              "target": "_self"
+            }
+          ]
+        }
+        
+      ]
+    }
+  }
+}

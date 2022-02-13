@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>编辑客房</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="../lib/layui-v2.5.4/css/layui.css" media="all">
+    <link rel="stylesheet" href="../css/public.css" media="all">
+    <link rel="stylesheet" href="../lib/font-awesome-4.7.0/css/font-awesome.min.css" media="all">
+    <link rel="stylesheet" href="../lib/jq-module/zyupload/zyupload-1.0.0.min.css" media="all">
+    <style type="text/css">
+    .roomNum>.layui-inline{
+        width:100px;
+    }
+    </style>
+
+</head>
+<body>
+<div class="layuimini-container">
+
+    <div class="layuimini-main">
+        <div class="layui-form-item" style="">
+<button type="button" class="layui-btn layui-btn-danger data-add-cancel "><i class="fa fa-remove icon"></i>取消编辑</button></div>
+
+        <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+            <legend>编辑客房</legend>
+        </fieldset>
+
+        <form class="layui-form" action="">
+
+              <div class="layui-form-item">
+                <label class="layui-form-label">所属酒店ID</label>
+                <div class="layui-input-block">
+                    <input type="text" name="hotelid" lay-verify="" autocomplete="off" placeholder="例：1" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label required">房间名称</label>
+                <div class="layui-input-block">
+                    <input type="text" name="roomType" lay-verify="" autocomplete="off" placeholder="例：豪华湖景大床房" class="layui-input">
+                </div>
+            </div>
+
+
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">客房原价</label>
+                    <div class="layui-input-inline">
+                        <input type="tel" name="price" lay-verify="required" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">渠道价</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="channelPrice" lay-verify="" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline roomNum">
+                    <label class="layui-form-label">可订房数</label>
+                    <div class="layui-inline">
+                        <input type="number" name="roomNum1" title="今天房量" lay-verify="number" autocomplete="off" placeholder="今天" class="layui-input">
+                    </div>
+                    <div class="layui-inline">
+                        <input type="number" name="roomNum2" title="明天房量" lay-verify="number" autocomplete="off" placeholder="明天" class="layui-input">
+                    </div>
+                    <div class="layui-inline">
+                        <input type="number" name="roomNum3" title="后天房量" lay-verify="number" autocomplete="off" placeholder="后天" class="layui-input">
+                    </div>
+                    <div class="layui-inline">
+                        <input type="number" name="roomNum4" title="3天后房量" lay-verify="number" autocomplete="off" placeholder="3天后" class="layui-input">
+                    </div>
+                    <div class="layui-inline">
+                        <input type="number" name="roomNum5" title="4天后房量" lay-verify="number" autocomplete="off" placeholder="4天后" class="layui-input">
+                    </div>
+                    <div class="layui-inline">
+                        <input type="number" name="roomNum6" title="5天后房量" lay-verify="number" autocomplete="off" placeholder="5天后" class="layui-input">
+                    </div>
+                    <div class="layui-inline">
+                        <input type="number" name="roomNum7" title="6天后房量" lay-verify="number" autocomplete="off" placeholder="6天后" class="layui-input">
+                    </div>
+                </div>
+            </div>
+
+            <!-- <div class="layui-form-item">
+            
+                <div class="layui-inline">
+                    <label class="layui-form-label">上架时间</label>
+
+                    <div class="layui-input-inline" style="width: 200px;">
+                        <input type="text" class="layui-input" id="test1" placeholder="yyyy-MM-dd HH:mm:ss" >
+                    </div>
+
+                    <div class="layui-form-mid">- </div> 
+
+                    <div class="layui-input-inline" style="width: 200px;">
+                       <input type="text" class="layui-input" id="test2" placeholder="yyyy-MM-dd HH:mm:ss" >
+                    </div>
+
+                </div>
+            </div> -->
+
+
+
+              
+
+
+<!-- element-ui-js库 -->
+<script src="//unpkg.com/vue/dist/vue.js"></script>
+<!-- 图片上传js -->
+<script src="//unpkg.com/element-ui@2.12.0/lib/index.js"></script>
+  <div class="layui-form-item">
+    <label class="layui-form-label">客房图片</label>
+<div id="app">
+<el-upload :on-remove="handleRemove" :on-success="handleSuccess" action="/?f=api&func=upload_file" :file-list="fileList" list-type="picture-card" :auto-upload="true">
+    <i slot="default" class="el-icon-plus"></i>
+</el-upload>
+
+<el-dialog :visible.sync="dialogVisible">
+  <img width="100%" :src="dialogImageUrl" alt="">
+</el-dialog>
+</div></div>
+<script>
+  var files=[];
+  var Main = {}
+</script>
+
+<div class="layui-form-item">
+                <label class="layui-form-label">限住人数</label>
+                <div class="layui-input-block">
+                    <select name="people" lay-filter="aihao">
+                        <option value=""></option>
+                        <option value="0">1人</option>
+                        <option value="1">2人</option>
+                        <option value="2">3人</option>
+                        <option value="3">4人</option>
+                        <option value="4">5人</option>
+                        <option value="5">6人</option>
+                    </select>
+                </div>
+            </div>
+
+<div class="layui-form-item">
+                <label class="layui-form-label required">床型尺寸</label>
+                <div class="layui-input-block">
+                    <input type="text" name="bedType" lay-verify="" autocomplete="off" placeholder="例：2米*1.2米单人床" class="layui-input">
+                </div>
+            </div>
+
+
+            <div class="layui-form-item">
+                <label class="layui-form-label required">客房面积</label>
+                <div class="layui-input-block">
+                    <input type="text" name="space" lay-verify="" autocomplete="off" placeholder="例：20㎡" class="layui-input">
+                </div>
+            </div>
+
+
+ <div class="layui-form-item">
+    <label class="layui-form-label">房间设施</label>
+    <div class="layui-input-block" id="prop">
+        <!-- 'yx'=>'有窗','cfj'=>'吹风机','drsh'=>'电热水壶','kt'=>'空调','ly'=>'淋浴','sz'=>'书桌','tx'=>'拖鞋','xsyp'=>'洗漱用品','yg'=>'衣柜','yug'=>'浴缸','bz'=>'可加被子' -->
+      <input type="checkbox" name="yx" title="有窗">
+      <input type="checkbox" name="cfj" title="吹风机">
+      <input type="checkbox" name="drsh" title="电热水壶">
+      <input type="checkbox" name="kt" title="空调">
+      <input type="checkbox" name="ly" title="淋浴">
+      <input type="checkbox" name="sz" title="书桌">
+      <input type="checkbox" name="tx" title="拖鞋">
+      <input type="checkbox" name="xsyp" title="洗漱用品">
+      <input type="checkbox" name="yg" title="衣柜">
+      <input type="checkbox" name="yug" title="浴缸">
+      <input type="checkbox" name="bz" title="可加被子">
+    </div>
+  </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">可用卡</label>
+                <div class="layui-input-block" id="enabledCards">
+                </div>
+            </div>
+   
+             <div class="layui-form-item">
+                 <label class="layui-form-label">客房介绍</label>
+                 <div id="editor" style="margin: 20px 0px 0px 110px">
+                      <p>客房图文介绍</p>
+                 </div>
+             </div>
+
+
+
+
+
+                   
+
+
+ <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
+                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                </div>
+            </div>
+
+
+
+        </form>
+    </div>
+</div>
+
+<script src="../lib/jquery-3.4.1/jquery-3.4.1.min.js" charset="utf-8"></script>
+<script src="../lib/layui-v2.5.4/layui.js" charset="utf-8"></script>
+<script src="../js/lay-config.js?v=1.0.4" charset="utf-8"></script>
+<script src="../lib/jq-module/zyupload/zyupload-1.0.0.min.js" charset="utf-8"></script>
+<!-- 日期选择器 -->
+<script>
+layui.use('laydate', function(){
+  var laydate = layui.laydate;
+  
+  //执行一个laydate实例
+  laydate.render({elem: '#test1' , trigger: 'click',type: 'datetime'});//指定元素
+
+  laydate.render({elem: '#test2', trigger: 'click',type: 'datetime'});
+
+});
+    var router = layui.router(); var id = router.search.id;
+</script>
+
+
+
+
+<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+<script>
+    function returnToMain(){
+        if(top.layui.layuimini){
+            top.layui.layuimini.delTab("kf-form-edit.html"+location.hash);
+        }else{
+            location.href="kf-table.html";
+        }
+    }
+    function getData(idname){
+        var classid = ''; 
+        $("#"+idname+" .layui-form-checkbox").each(function(){
+            var _taht = $(this);
+            if(_taht.is(".layui-form-checked")){ 
+                classid += _taht.prev("input").attr("name")+','; 
+            }
+        });
+        
+        classid = classid.slice(0,classid.length-1);
+   
+        if(classid.length == 0){
+            classid = ''; 
+        }
+        return classid;
+    }
+    $.get("/admin/?p=index&getCards=1", function(result){
+        var cards=JSON.parse(result);
+        for(i in cards){
+            var card=cards[i];
+            $("#enabledCards").append('<input type="checkbox" name="'+card["type"]+'" title="'+card["cardName"]+'">');
+        }
+    });
+    layui.use(['form', 'layedit', 'layer','wangEditor'], function () {
+        var $ = layui.jquery
+            ,form = layui.form
+            , layer = layui.layer
+            , layedit = layui.layedit
+            , wangEditor = layui.wangEditor;
+
+        var editor = new wangEditor('#editor');
+        editor.customConfig.uploadImgServer = "/?f=api&func=upload_file";
+        editor.customConfig.uploadFileName = 'file';
+        editor.customConfig.pasteFilterStyle = false;
+        editor.customConfig.uploadImgMaxLength = 5;
+        editor.customConfig.uploadImgHooks = {
+            // 上传超时
+            timeout: function (xhr, editor) {
+                layer.msg('上传超时！')
+            },
+            // 如果服务器端返回的不是 {errno:0, data: [...]} 这种格式，可使用该配置
+            customInsert: function (insertImg, result, editor) {
+                console.log(result);
+                if (result.code == 1) {
+                    var url = result.data.url;
+                    url.forEach(function (e) {
+                        insertImg(e);
+                    })
+                } else {
+                    insertImg(result.msg);
+                    layer.msg(result.msg);
+                }
+            }
+        };
+        editor.customConfig.customAlert = function (info) {
+            layer.msg(info);
+        };
+        editor.create();
+       
+
+        //创建一个编辑器
+        var editIndex = layedit.build('LAY_demo_editor');
+
+        //自定义验证规则
+        form.verify({
+            title: function (value) {
+                if (value.length < 5) {
+                    return '标题至少得5个字符啊';
+                }
+            }
+            , pass: [
+                /^[\S]{6,12}$/
+                , '密码必须6到12位，且不能出现空格'
+            ]
+            , content: function (value) {
+                layedit.sync(editIndex);
+            }
+        });
+
+        //监听指定开关
+        form.on('switch(switchTest)', function (data) {
+            layer.msg('开关checked：' + (this.checked ? 'true' : 'false'), {
+                offset: '6px'
+            });
+            layer.tips('温馨提示：请注意开关状态的文字可以随意定义，而不仅仅是ON|OFF', data.othis)
+        });
+
+        //监听提交
+        form.on('submit(demo1)', function (data) {
+            $.post("/admin/?p=index&editRoom=1",{
+                //$hotelid,$roomType,$price,$channelPrice,$pics,$people,$bedType,$space,$prop
+                roomid:id,
+                hotelid:data.field.hotelid,
+                roomType:data.field.roomType,
+                price:data.field.price,
+                channelPrice:data.field.channelPrice,
+                pics:files.join(","),
+                people:$("select[name='people']").val(),
+                bedType:data.field.bedType,
+                space:data.field.space,
+                roomNum:data.field.roomNum1+","+data.field.roomNum2+","+data.field.roomNum3+","+data.field.roomNum4+","+data.field.roomNum5+","+data.field.roomNum6+","+data.field.roomNum7,
+                prop:getData("prop"),
+                enableCards:getData("enabledCards"),
+                description:$(".w-e-text").html()
+            }, function(result){
+                if(result==1){
+                    layer.alert("编辑成功", {
+                        title: '成功'
+                    },function (index) { 
+                        returnToMain();
+                    });
+                    
+                }
+            });
+            return false;
+        });
+ //监听取消添加
+
+        $(".data-add-cancel").on("click", function () {
+            // window.location.href="kf-table.html";
+            returnToMain();
+        });
+
+        $.get("/admin/?p=index&getRoom=1&id="+id, function(data){
+            data=JSON.parse(data);
+            $("input[name='hotelid']").val(data.hotel);
+            $("input[name='roomType']").val(data.type);
+            $("input[name='price']").val(data.price);
+            $("input[name='channelPrice']").val(data.channelPrice);
+            $("select[name='people']").val(data.people);
+            $("input[name='bedType']").val(data.bed);
+            $("input[name='space']").val(data.space);
+            $(".w-e-text").html(data.description);
+
+            var roomNums=data.roomNum.split(",");
+            if(roomNums.length==1){
+                roomNums=[roomNums[0],roomNums[0],roomNums[0],roomNums[0],roomNums[0],roomNums[0],roomNums[0]];
+            }
+            $("input[name='roomNum1']").val(roomNums[0]);
+            $("input[name='roomNum2']").val(roomNums[1]);
+            $("input[name='roomNum3']").val(roomNums[2]);
+            $("input[name='roomNum4']").val(roomNums[3]);
+            $("input[name='roomNum5']").val(roomNums[4]);
+            $("input[name='roomNum6']").val(roomNums[5]);
+            $("input[name='roomNum7']").val(roomNums[6]);
+            if(data.enableCard){
+                var cards=data.enableCard.split(",");
+                cards.forEach(function(i){
+                    $("input[name='"+i+"']").prop("checked",true);
+                })
+            }
+            if(data.prop){
+                var props=data.prop.split(",");
+                props.forEach(function(i){
+                    $("input[name='"+i+"']").prop("checked",true);
+                })
+            }
+            var form = layui.form;
+            form.render();
+
+            var pics=[];
+            if(data.pics){
+                files=data.pics.split(",");
+                files.forEach(function(i){
+                    pics.push({name:i,url:i});
+                });
+            }
+            var Main = {
+                data() {
+                  return {
+                    dialogImageUrl: '',
+                    dialogVisible: false,
+                    disabled: false,
+                    fileList:pics
+                  };
+                },
+                methods: {
+                  handleRemove(file, fileList) {
+                    for(var i = 0; i < files.length; i++) {
+                        if(files[i] == file.url) {
+                         files.splice(i, 1);
+                         break;
+                        }
+                    }
+                    console.log(file);
+                  },
+                  handlePictureCardPreview(file) {
+                    this.dialogImageUrl = file.url;
+                    this.dialogVisible = true;
+                  },
+                  handleDownload(file) {
+                    console.log(file);
+                  },
+                  handleSuccess(file) {
+                    files.push(file.msg);
+                    console.log(file.msg);
+                  }
+                }
+            }
+            var Ctor = Vue.extend(Main)
+            new Ctor().$mount('#app')
+        });
+
+
+    });
+</script>
+
+
+<script type="text/javascript">
+    $(function () {
+        // 初始化插件
+        $("#zyupload").zyUpload({
+            width: "650px",                 // 宽度
+            height: "400px",                 // 宽度
+            itemWidth: "140px",                 // 文件项的宽度
+            itemHeight: "115px",                 // 文件项的高度
+            url: "api/upload",  // 上传文件的路径
+            fileType: ["jpg", "png", "txt", "js", "exe"],// 上传文件的类型
+            fileSize: 51200000,                // 上传文件的大小
+            multiple: true,                    // 是否可以多个文件上传
+            dragDrop: true,                    // 是否可以拖动上传文件
+            tailor: true,                    // 是否可以裁剪图片
+            del: true,                    // 是否可以删除文件
+            finishDel: false,                 // 是否在上传文件完成后删除预览
+            /* 外部获得的回调接口 */
+            onSelect: function (selectFiles, allFiles) {    // 选择文件的回调方法  selectFile:当前选中的文件  allFiles:还没上传的全部文件
+                console.info("当前选择了以下文件：");
+                console.info(selectFiles);
+            },
+            onDelete: function (file, files) {              // 删除一个文件的回调方法 file:当前删除的文件  files:删除之后的文件
+                console.info("当前删除了此文件：");
+                console.info(file.name);
+            },
+            onSuccess: function (file, response) {          // 文件上传成功的回调方法
+                console.info("此文件上传成功：");
+                console.info(file.name);
+                console.info("此文件上传到服务器地址：");
+                console.info(response);
+                $("#uploadInf").append("<p>上传成功，文件地址是：" + response + "</p>");
+            },
+            onFailure: function (file, response) {          // 文件上传失败的回调方法
+                console.info("此文件上传失败：");
+                console.info(file.name);
+            },
+            onComplete: function (response) {                 // 上传完成的回调方法
+                console.info("文件上传完成");
+                console.info(response);
+            }
+        });
+
+    });
+</script>
+
+
+
+</body>
+</html>

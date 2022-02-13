@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>编辑酒店</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="../lib/layui-v2.5.4/css/layui.css" media="all">
+    <link rel="stylesheet" href="../css/public.css" media="all">
+    <link rel="stylesheet" href="../lib/font-awesome-4.7.0/css/font-awesome.min.css" media="all">
+    <link rel="stylesheet" href="../lib/jq-module/zyupload/zyupload-1.0.0.min.css" media="all">
+    
+
+</head>
+<body>
+<div class="layuimini-container">
+
+    <div class="layuimini-main">
+        <div class="layui-form-item" style="">
+<button type="button" class="layui-btn layui-btn-danger data-add-cancel "><i class="fa fa-remove icon"></i>取消编辑</button></div>
+
+        <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+            <legend>编辑酒店</legend>
+        </fieldset>
+
+        <form class="layui-form" action="">
+
+            <div class="layui-form-item">
+                <label class="layui-form-label required">酒店名称</label>
+                <div class="layui-input-block">
+                    <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input">
+                </div>
+            </div>
+
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">星级</label>
+                <div class="layui-input-block">
+                    <select name="starLv" lay-filter="aihao">
+                        <option value="0">精品</option>
+                        <option value="1">一星</option>
+                        <option value="2">二星</option>
+                        <option value="3">三星</option>
+                        <option value="4">四星</option>
+                        <option value="5">五星</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label required">联系电话</label>
+                <div class="layui-input-block">
+                    <input type="tel" name="phone" lay-verify="required|phone" autocomplete="off" placeholder="请输入电话" class="layui-input">
+                </div>
+            </div>
+
+
+            <div class="layui-form-item" style="display: none;">
+                <div class="layui-inline">
+                    <label class="layui-form-label">后台账号</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="account" lay-verify="" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">后台密码</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="pass" lay-verify="" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+            </div>
+
+
+                        <div class="layui-form-item">
+                <label class="layui-form-label">区域选择</label>
+                <div class="layui-input-inline">
+                    <select name="province" lay-filter="province">
+                        <option value="">请选择省</option>
+                    </select>
+                </div>
+                <div class="layui-input-inline">
+                    <select name="city" lay-filter="city">
+                        <option value="">请选择市</option>
+                    </select>
+                </div>
+                <div class="layui-input-inline">
+                    <select name="county">
+                        <option value="">请选择县/区</option>
+                    </select>
+                </div>
+                <div class="layui-form-mid layui-word-aux"></div>
+            </div>
+
+            <div class="layui-form-item">
+                <label for="" class="layui-form-label">地址</label>
+                <div class="weui-cell__bd">
+                    <a href="javascript:void(0)" class="weui_btn weui_btn_primary dingwei-box" id="iframes">
+                    <input class="layui-btn" type="text" id="job_address" value=""/>
+                    <input style="display: none;" type="text" id="lat" value=""/>
+                    <input style="display: none;" type="text" id="lng" value=""/>
+                    </a>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">所属渠道</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="channel" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">是否推荐</label>
+                <div class="layui-input-inline">
+                    <select name="recom" lay-filter="">
+                        <option value="0" selected="selected">不推荐</option>
+                        <option value="1">一级推荐</option>
+                        <option value="2">二级推荐</option>
+                        <option value="3">三级推荐</option>
+                        <option value="4">四级推荐</option>
+                        <option value="5">五级推荐</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="layui-inline">
+                <label class="layui-form-label">是否上架</label>
+                <div class="layui-input-inline">
+                    <input type="checkbox" name="state" title="上架">
+                </div>
+            </div>
+
+
+
+<!-- element-ui-js库 -->
+<script src="//unpkg.com/vue/dist/vue.js"></script>
+<!-- 图片上传js -->
+<script src="//unpkg.com/element-ui@2.12.0/lib/index.js"></script>
+  <div class="layui-form-item">
+    <label class="layui-form-label">酒店图片</label>
+<div id="app">
+<el-upload :on-remove="handleRemove" :on-success="handleSuccess" action="/?f=api&func=upload_file" :file-list="fileList" list-type="picture-card" :auto-upload="true">
+    <i slot="default" class="el-icon-plus"></i>
+</el-upload>
+
+<el-dialog :visible.sync="dialogVisible">
+  <img width="100%" :src="dialogImageUrl" alt="">
+</el-dialog>
+</div></div>
+<script>
+  var files=[];
+  var Main = {}
+</script>
+
+ 
+   
+             <div class="layui-form-item">
+                 <label class="layui-form-label">酒店介绍</label>
+                 <div id="editor" style="margin: 20px 0px 0px 110px">
+                      <p>酒店图文介绍</p>
+                 </div>
+             </div>
+
+
+
+ <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
+                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                </div>
+            </div>
+
+
+
+        </form>
+    </div>
+</div>
+
+<script src="../lib/jquery-3.4.1/jquery-3.4.1.min.js" charset="utf-8"></script>
+<script src="../lib/layui-v2.5.4/layui.js" charset="utf-8"></script>
+<script src="../js/lay-config.js?v=1.0.4" charset="utf-8"></script>
+<script src="../lib/jq-module/zyupload/zyupload-1.0.0.min.js" charset="utf-8"></script>
+<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+<script>
+
+    layui.use(['form', 'layedit','laydate','layer','wangEditor'], function () {
+        var $ = layui.jquery
+            ,form = layui.form
+            , layer = layui.layer
+            , layedit = layui.layedit
+            , laydate = layui.laydate
+            , wangEditor = layui.wangEditor;
+
+        var editor = new wangEditor('#editor');
+        var router = layui.router(); var id = router.search.id;
+        editor.customConfig.uploadImgServer = "/?f=api&func=upload_file";
+        editor.customConfig.uploadFileName = 'file';
+        editor.customConfig.pasteFilterStyle = false;
+        editor.customConfig.uploadImgMaxLength = 5;
+        editor.customConfig.uploadImgHooks = {
+            // 上传超时
+            timeout: function (xhr, editor) {
+                layer.msg('上传超时！')
+            },
+            // 如果服务器端返回的不是 {errno:0, data: [...]} 这种格式，可使用该配置
+            customInsert: function (insertImg, result, editor) {
+                console.log(result);
+                if (result.code == 1) {
+                    var url = result.data.url;
+                    url.forEach(function (e) {
+                        insertImg(e);
+                    })
+                } else {
+                    insertImg(result.msg);
+                    layer.msg(result.msg);
+                }
+            }
+        };
+        editor.customConfig.customAlert = function (info) {
+            layer.msg(info);
+        };
+        editor.create();
+        //日期
+        laydate.render({
+            elem: '#date'
+        });
+        laydate.render({
+            elem: '#date1'
+        });
+
+        //创建一个编辑器
+        var editIndex = layedit.build('LAY_demo_editor');
+
+        //自定义验证规则
+        form.verify({
+            title: function (value) {
+                if (value.length < 5) {
+                    return '标题至少得5个字符';
+                }
+            },
+            title: function (value) {
+                if (value.length < 5) {
+                    return '标题至少得5个字符';
+                }
+            },
+            pass: [
+                /^[\S]{6,12}$/
+                , '密码必须6到12位，且不能出现空格'
+            ]
+            , content: function (value) {
+                layedit.sync(editIndex);
+            }
+        });
+
+        //监听指定开关
+        form.on('switch(switchTest)', function (data) {
+            layer.msg('开关checked：' + (this.checked ? 'true' : 'false'), {
+                offset: '6px'
+            });
+            layer.tips('温馨提示：请注意开关状态的文字可以随意定义，而不仅仅是ON|OFF', data.othis)
+        });
+
+        //监听提交
+        form.on('submit(demo1)', function (data) {
+            $.post("/admin/?p=index&editHotel=1",{
+                //$name, $starLv, $phone, $hotelUser, $hotelPass, $province, $city, $county, $pics, $description
+                hotelid:id,
+                name:data.field.title,
+                starLv:data.field.starLv,
+                phone:data.field.phone,
+                hotelUser:data.field.account,
+                hotelPass:data.field.pass,
+                province:data.field.province,
+                city:data.field.city,
+                county:data.field.county,
+                pics:files.join(","),
+                pos:$("#job_address").val(),
+                lng:$("#lng").val(),
+                lat:$("#lat").val(),
+                recom:$("select[name='recom']").val(),
+                description:$(".w-e-text").html(),
+                state:$(".layui-form-checkbox").is(".layui-form-checked")?1:0
+            }, function(result){
+                if(result==0){
+                    layer.alert("账号已存在", {
+                        title: '错误'
+                    });
+                }else if(result==1){
+                    layer.alert("编辑成功", {
+                        title: '成功'
+                    },function (index) { 
+                        location.href="jd-table.html";
+                    });
+                    
+                }
+            });
+            return false;
+        });
+
+
+        $(".data-add-cancel").on("click", function () {
+            window.location.href="jd-table.html";
+            
+        });
+        $.get("/admin/?p=index&getCurChannel=1", function(result){
+            if(result!="admin"){
+                $("input[name='channel']").val(result);
+                $("input[name='channel']").parent().parent().hide();
+            }
+        });
+        
+
+        form.on('select(province)', function(data){
+            $.get("/admin/?p=index&getCityListByProvince="+data.value, function(result){
+                $("select[name=county]").empty();
+                $("select[name=city]").empty();
+                $("select[name=city]").append('<option value="">请选择市</option>');
+                $("select[name=city]").append(result);
+                layui.use('form', function(){
+                    var form = layui.form;
+                    $("select[name=city]").find("option[value='']").prop("selected",true);
+                    form.render();
+                });
+            });
+        });
+
+        form.on('select(city)', function(data){
+            $.get("/admin/?p=index&getCountyListByCity="+data.value, function(result){
+                $("select[name=county]").empty();
+                $("select[name=county]").append('<option value="">请选择县/区</option>');
+                $("select[name=county]").append(result);
+                layui.use('form', function(){
+                    $("select[name=county]").find("option[value='']").prop("selected",true);
+                    var form = layui.form;
+                    form.render();
+                });
+            });
+        });
+
+
+        $.get("/admin/?p=index&getHotel=1&id="+id, function(data){
+            data=JSON.parse(data);
+            $("input[name='title']").val(data.name);
+            $("input[name='phone']").val(data.phone);
+            $("input[name='account']").val(data.account);
+            $("input#job_address").val(data.pos);
+            $("input#lat").val(data.lat);
+            $("input#lng").val(data.lng);
+            $("select[name='recom']").val(data.recom);
+            if(data.state==1)
+            $("input[name='state']").prop("checked",true);
+            $("input[name='channel']").val(data.channel);
+            $("select[name='starLv']").val(data.starLv);
+            $(".w-e-text").html(data.description);
+            $.get("/admin/?p=index&getProvinceList=1", function(result){
+                $("select[name=province]").empty();
+                $("select[name=province]").append('<option value="">请选择省</option>');
+                $("select[name=province]").append(result);
+                layui.use('form', function(){
+                    $("select[name='province']").find("option[value='"+data.province+"']").prop("selected",true);
+                    $.get("/admin/?p=index&getCityListByProvince="+data.province, function(result){
+                        $("select[name=county]").empty();
+                        $("select[name=city]").empty();
+                        $("select[name=city]").append('<option value="">请选择市</option>');
+                        $("select[name=city]").append(result);
+                        layui.use('form', function(){
+                            $("select[name=city]").find("option[value='"+data.city+"']").prop("selected",true);
+                            $.get("/admin/?p=index&getCountyListByCity="+data.city, function(result){
+                                $("select[name=county]").empty();
+                                $("select[name=county]").append('<option value="">请选择县/区</option>');
+                                $("select[name=county]").append(result);
+                                layui.use('form', function(){
+                                    $("select[name=county]").find("option[value='"+data.county+"']").prop("selected",true);
+                                    var form = layui.form;
+                                    form.render();
+                                });
+                            });
+                        });
+                    });
+                });
+            });
+
+            var pics=[];
+            if(data.pics){
+                files=data.pics.split(",");
+                files.forEach(function(i){
+                    pics.push({name:i,url:i});
+                });
+            }
+            var Main = {
+                data() {
+                  return {
+                    dialogImageUrl: '',
+                    dialogVisible: false,
+                    disabled: false,
+                    fileList:pics
+                  };
+                },
+                methods: {
+                  handleRemove(file, fileList) {
+                    for(var i = 0; i < files.length; i++) {
+                        if(files[i] == file.url) {
+                         files.splice(i, 1);
+                         break;
+                        }
+                    }
+                    console.log(file);
+                  },
+                  handlePictureCardPreview(file) {
+                    this.dialogImageUrl = file.url;
+                    this.dialogVisible = true;
+                  },
+                  handleDownload(file) {
+                    console.log(file);
+                  },
+                  handleSuccess(file) {
+                    files.push(file.msg);
+                    console.log(file.msg);
+                  }
+                }
+            }
+            var Ctor = Vue.extend(Main)
+            new Ctor().$mount('#app')
+        });
+
+        //弹出一个iframe层
+        $('#iframes').on('click', function(){
+            // 禁用按钮防止重复提交
+            $("#job_address").attr({ disabled: "disabled" });//不加的话容易滑屏...
+            layer.open({
+              type: 2,
+              title: '地图选点',
+              maxmin: false,
+              shadeClose: true, //点击遮罩关闭层
+              area: ['350px', '80%'],
+              content: ["map.html",'no']
+            });
+        });
+    });
+</script>
+
+<script type="text/javascript">
+    $(function () {
+        // 初始化插件
+        $("#zyupload").zyUpload({
+            width: "650px",                 // 宽度
+            height: "400px",                 // 宽度
+            itemWidth: "140px",                 // 文件项的宽度
+            itemHeight: "115px",                 // 文件项的高度
+            url: "api/upload",  // 上传文件的路径
+            fileType: ["jpg", "png", "txt", "js", "exe"],// 上传文件的类型
+            fileSize: 51200000,                // 上传文件的大小
+            multiple: true,                    // 是否可以多个文件上传
+            dragDrop: true,                    // 是否可以拖动上传文件
+            tailor: true,                    // 是否可以裁剪图片
+            del: true,                    // 是否可以删除文件
+            finishDel: false,                 // 是否在上传文件完成后删除预览
+            /* 外部获得的回调接口 */
+            onSelect: function (selectFiles, allFiles) {    // 选择文件的回调方法  selectFile:当前选中的文件  allFiles:还没上传的全部文件
+                console.info("当前选择了以下文件：");
+                console.info(selectFiles);
+            },
+            onDelete: function (file, files) {              // 删除一个文件的回调方法 file:当前删除的文件  files:删除之后的文件
+                console.info("当前删除了此文件：");
+                console.info(file.name);
+            },
+            onSuccess: function (file, response) {          // 文件上传成功的回调方法
+                console.info("此文件上传成功：");
+                console.info(file.name);
+                console.info("此文件上传到服务器地址：");
+                console.info(response);
+                $("#uploadInf").append("<p>上传成功，文件地址是：" + response + "</p>");
+            },
+            onFailure: function (file, response) {          // 文件上传失败的回调方法
+                console.info("此文件上传失败：");
+                console.info(file.name);
+            },
+            onComplete: function (response) {                 // 上传完成的回调方法
+                console.info("文件上传完成");
+                console.info(response);
+            }
+        });
+    });
+</script>
+
+</body>
+</html>

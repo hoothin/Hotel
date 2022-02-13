@@ -1,0 +1,31 @@
+{
+  "code": 0,
+  "msg": "",
+  "count": 1000,
+  "data": [
+    {
+      "id": 10000,
+      "hotel-name": "金鹰大酒店",
+      "hotel-source": "中国青旅",
+      "rooms-type": "豪华大床房",
+      "hotel-start": "五星级",
+      "rooms-price": "598",
+      "rooms-channelPrice": "198",
+      "prop": "<div class='layui-btn layui-btn-xs layui-btn-on'>开放预订</div>",
+      "addtime": "2019.9.13 ~ 2019.9.16",
+      "score": 31
+    },
+   {
+      "id": 10000,
+      "hotel-name": "樱花大酒店",
+      "hotel-source": "Hoothin酒店集团",
+      "rooms-type": "豪华套房",
+      "hotel-start": "四星级",
+      "rooms-price": "398",
+      "rooms-channelPrice": "120",
+      "prop": "<div class='layui-btn layui-btn-xs layui-btn-off'>关闭预订</div>",
+      "addtime": "-",
+      "score": 31
+    }
+  ]
+}

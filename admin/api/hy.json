@@ -1,0 +1,72 @@
+{
+  "code": 0,
+  "msg": "",
+  "count": 1000,
+  "data": [
+    {
+      "cardID": 102211,
+      "username": "欧阳郑华",
+      "sex": "男",
+      "phone": "18016803299",
+      "activeTime": "2019-01-23",
+      "useTimes": "2",
+      "isBan": "-"
+     
+    },
+   {
+      "cardID": 102210,
+      "username": "李二蛋",
+      "sex": "男",
+      "phone": "13018212439",
+      "activeTime": "2019-02-12",
+      "useTimes": "0",
+      "isBan": "处罚中"
+    },
+      {
+      "cardID": 102210,
+      "username": "张三",
+      "sex": "女",
+      "phone": "13018212439",
+      "activeTime": "2019-02-12",
+      "useTimes": "0",
+      "isBan": "处罚中"
+    },
+      {
+      "cardID": 102210,
+      "username": "赵四",
+      "sex": "女",
+      "phone": "13018212439",
+      "activeTime": "2019-02-12",
+      "useTimes": "0",
+      "isBan": "处罚中"
+    },
+      {
+      "cardID": 102210,
+      "username": "王五",
+      "sex": "男",
+      "phone": "13018212439",
+      "activeTime": "2019-02-12",
+      "useTimes": "0",
+      "isBan": "处罚中"
+    },
+      {
+      "cardID": 102210,
+      "username": "徐三多",
+      "sex": "男",
+      "phone": "13018212439",
+      "activeTime": "2019-02-12",
+      "useTimes": "0",
+      "isBan": "处罚中"
+    },
+      {
+      "cardID": 102210,
+      "username": "李可强",
+      "sex": "女",
+      "phone": "13018212439",
+      "activeTime": "2019-02-12",
+      "useTimes": "0",
+      "isBan": "处罚中"
+    }
+   
+  ]
+}
