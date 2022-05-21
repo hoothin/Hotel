@@ -1,9 +1,0 @@
-@charset "utf-8";
-
-body{ background-color: #fff; color:#4A4A4A; }
-.upanel{ padding:0 15px; font-size: 16px; border-top:20px solid #f6f6f6; }
-.upanel .doc-row{ padding: 14px 0; position: relative; }
-.upanel .faceimg{ width: 50px; height: 50px; }
-.uphone{ position: relative; padding-right: 16px; }
-.uphone:after{ width: 10px; height: 10px; border-width:2px; right: 0; top:3px; border-color: #595959; }
-
